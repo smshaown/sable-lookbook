@@ -1,0 +1,856 @@
+/* ==========================================================================
+   SABLE — Editorial Lookbook & E-Commerce Layout
+   ========================================================================== */
+
+.sable {
+  position: relative;
+  height: 100svh;
+  min-height: 560px;
+  background-color: var(--tint);
+  transition: background-color 1.1s var(--ease);
+  isolation: isolate;
+  overflow: clip;
+}
+
+/* Ambient radial spotlight + horizon floor line */
+.sable::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 55% at 50% 46%, rgba(255, 255, 255, 0.55), transparent 70%),
+    linear-gradient(
+      to bottom,
+      transparent calc(100% - var(--band) - 6svh),
+      rgba(27, 24, 21, 0.05) calc(100% - var(--band)),
+      transparent calc(100% - var(--band) + 1px)
+    );
+}
+
+/* --------------------------------------------------------------------------
+   Header / Navigation (z-index: 300)
+   -------------------------------------------------------------------------- */
+.sable-nav {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 300;
+  height: var(--nav);
+  padding: 0 var(--gutter);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.sable-brand {
+  justify-self: start;
+  font-family: var(--font-serif);
+  font-size: 26px;
+  letter-spacing: 0.22em;
+  line-height: 1;
+}
+
+.sable-nav nav {
+  display: flex;
+  gap: clamp(18px, 2.6vw, 40px);
+}
+
+.sable-nav nav a {
+  position: relative;
+  padding: 6px 0;
+}
+
+.sable-nav nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: 100% center;
+  transition: transform 0.5s var(--ease);
+}
+
+.sable-nav nav a:hover::after,
+.sable-nav nav a:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: 0 center;
+}
+
+.sable-bag {
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 6px 0;
+  text-transform: inherit;
+}
+
+.sable-bag span {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--tint);
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+  transition: color 1.1s var(--ease);
+}
+
+/* --------------------------------------------------------------------------
+   Season Editorial Copy (z-index: 250)
+   -------------------------------------------------------------------------- */
+.sable-season {
+  position: absolute;
+  top: calc(var(--nav) + 2.5svh);
+  left: var(--gutter);
+  z-index: 250;
+  max-width: 15.5rem;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink-muted);
+  transition: opacity 0.45s var(--ease);
+}
+
+.sable-season span {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 10.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+/* --------------------------------------------------------------------------
+   Giant Serif Wordmark Layer (z-index: 1)
+   -------------------------------------------------------------------------- */
+.sable-words {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(var(--nav) + (100svh - var(--nav) - var(--band)) * 0.47);
+  height: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.sable-words span {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-serif);
+  font-size: min(30vw, 150vw / var(--len, 5), 46svh);
+  line-height: 0.86;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  padding: 0.06em 0.04em 0.12em;
+  overflow: hidden;
+  user-select: none;
+}
+
+.sable-words em {
+  display: block;
+  font-style: normal;
+  will-change: transform;
+}
+
+/* --------------------------------------------------------------------------
+   Interactive Cut-Out Carousel Stage (z-index: 10)
+   -------------------------------------------------------------------------- */
+.sable-stage {
+  position: absolute;
+  top: var(--nav);
+  bottom: var(--band);
+  left: 0;
+  right: 0;
+  z-index: 10;
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+  outline: none;
+}
+
+.sable-stage.is-dragging {
+  cursor: grabbing;
+}
+
+.sable-stage:focus-visible {
+  box-shadow: inset 0 0 0 2px rgba(27, 24, 21, 0.35);
+}
+
+.sable-figure {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  height: var(--fh);
+  padding: 0;
+  cursor: inherit;
+  transform-origin: 50% 100%;
+  will-change: transform, opacity;
+}
+
+.sable-figure img,
+.sable-figure-fallback {
+  height: 100%;
+  width: auto;
+  max-width: none;
+  pointer-events: none;
+  position: relative;
+}
+
+.sable-figure-fallback {
+  aspect-ratio: 440 / 1400;
+  display: grid;
+  place-items: center;
+  border: 1px dashed var(--ink-border);
+  border-radius: 120px 120px 8px 8px;
+  background: rgba(255, 255, 255, 0.24);
+  font-family: var(--font-serif);
+  font-size: 20px;
+  color: var(--ink-subtle);
+}
+
+.sable-figure:focus-visible {
+  outline: 2px solid rgba(27, 24, 21, 0.55);
+  outline-offset: 6px;
+  border-radius: 6px;
+}
+
+.sable-shadow {
+  position: absolute;
+  left: -12%;
+  right: -12%;
+  bottom: -2.2%;
+  height: 6%;
+  border-radius: 50%;
+  filter: blur(3px);
+  pointer-events: none;
+  background: radial-gradient(
+    closest-side,
+    rgba(27, 24, 21, 0.32),
+    rgba(27, 24, 21, 0.1) 55%,
+    transparent
+  );
+}
+
+/* --------------------------------------------------------------------------
+   Footer Info Band (z-index: 200)
+   -------------------------------------------------------------------------- */
+.sable-info {
+  position: absolute;
+  inset: auto 0 0;
+  z-index: 200;
+  height: var(--band);
+  padding: 0 var(--gutter) 1.5svh;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 24px;
+  transition: opacity 0.45s var(--ease);
+}
+
+.sable-look {
+  max-width: 21rem;
+}
+
+.sable-count {
+  margin-bottom: 6px;
+  font-size: 10.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-subtle);
+}
+
+.sable-count b {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.sable-look h1 {
+  margin-bottom: 10px;
+  font-family: var(--font-serif);
+  font-size: clamp(24px, 2.3vw, 34px);
+  font-weight: 400;
+  line-height: 1.05;
+}
+
+.sable-look ul {
+  font-size: 12.5px;
+}
+
+.sable-look li {
+  border-top: 1px solid var(--ink-hairline);
+}
+
+.sable-look li button {
+  width: 100%;
+  padding: 4px 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.sable-look li span:last-child {
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-muted);
+}
+
+@media (hover: hover) {
+  .sable-look li button:hover span:first-child {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
+
+/* Carousel Controls */
+.sable-controls {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.sable-controls ol {
+  display: flex;
+  gap: 2px;
+}
+
+.sable-controls ol button {
+  position: relative;
+  display: block;
+  width: 26px;
+  height: 28px;
+  cursor: pointer;
+}
+
+.sable-controls ol button::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 3px;
+  right: 3px;
+  height: 2px;
+  margin-top: -1px;
+  border-radius: 2px;
+  background: rgba(27, 24, 21, 0.22);
+  transition: background-color 0.4s, transform 0.5s var(--ease);
+}
+
+.sable-controls ol button:hover::before {
+  background: rgba(27, 24, 21, 0.55);
+}
+
+.sable-controls ol button[aria-current="true"]::before {
+  background: var(--ink);
+  transform: scaleY(2);
+}
+
+.sable-arrow {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  border: 1px solid var(--ink-border);
+  color: var(--ink);
+  font-size: 16px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: background-color 0.35s, color 0.35s, border-color 0.35s;
+}
+
+@media (hover: hover) {
+  .sable-arrow:hover {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--tint);
+  }
+}
+
+.sable-arrow:active {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--tint);
+}
+
+.sable-controls button:focus-visible,
+.sable-cta:focus-visible,
+.sable-close:focus-visible,
+.sable-bag:focus-visible,
+.sable-sizes button:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+/* Price & CTA */
+.sable-buy {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.sable-buy p {
+  text-align: right;
+}
+
+.sable-buy p span {
+  display: block;
+  font-size: 10.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-subtle);
+}
+
+.sable-buy p b {
+  display: block;
+  margin-top: 2px;
+  font-family: var(--font-serif);
+  font-size: 28px;
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+}
+
+.sable-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 24px;
+  border-radius: var(--radius-pill);
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 11.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: opacity 0.25s ease;
+}
+
+.sable-cta i {
+  font-style: normal;
+  transition: transform 0.45s var(--ease);
+}
+
+.sable-cta:hover i {
+  transform: translateX(5px);
+}
+
+/* --------------------------------------------------------------------------
+   Detail Drawer Panel (.sable-panel) & Bag Drawer (.sable-bag-drawer)
+   -------------------------------------------------------------------------- */
+.sable-panel,
+.sable-bag-drawer {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 220;
+  width: var(--panel-w);
+  padding: calc(var(--nav) + 2svh) clamp(22px, 3vw, 44px) 28px;
+  background: var(--tint);
+  border-left: 1px solid rgba(27, 24, 21, 0.1);
+  box-shadow: var(--shadow-panel);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  visibility: hidden;
+  transition: background-color 1.1s var(--ease);
+}
+
+.sable.is-open .sable-info,
+.sable.is-open .sable-season {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.45s var(--ease);
+}
+
+.sable-bag-drawer {
+  z-index: 320;
+  padding-top: 28px;
+}
+
+@supports (color: color-mix(in srgb, red, red)) {
+  .sable-panel,
+  .sable-bag-drawer {
+    background: color-mix(in srgb, var(--tint) 55%, #fffdf9);
+  }
+}
+
+.sable-panel-in {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.sable-close {
+  position: absolute;
+  top: calc(var(--nav) + 1.5svh);
+  right: clamp(18px, 2.5vw, 32px);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--ink-border);
+  font-size: 20px;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s, transform 0.4s var(--ease);
+}
+
+.sable-bag-drawer .sable-close {
+  top: 22px;
+}
+
+@media (hover: hover) {
+  .sable-close:hover {
+    background: var(--ink);
+    color: var(--paper);
+    transform: rotate(90deg);
+  }
+}
+
+.sable-panel h2,
+.sable-bag-drawer h2 {
+  margin: 6px 44px 12px 0;
+  font-family: var(--font-serif);
+  font-size: clamp(34px, 3.4vw, 52px);
+  font-weight: 400;
+  line-height: 1;
+}
+
+.sable-note {
+  margin-bottom: 20px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--ink-muted);
+}
+
+.sable-pieces {
+  margin-bottom: 22px;
+}
+
+.sable-pieces li {
+  padding: 14px 0 16px;
+  border-top: 1px solid var(--ink-hairline);
+}
+
+.sable-pieces li.is-highlighted {
+  background: rgba(27, 24, 21, 0.04);
+  margin: 0 -10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 8px;
+}
+
+.sable-piece-head {
+  display: grid;
+  grid-template-columns: 24px 1fr auto;
+  align-items: start;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.sable-piece-idx {
+  font-size: 11px;
+  color: var(--ink-subtle);
+  padding-top: 2px;
+}
+
+.sable-piece-head h3 {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.sable-piece-head p {
+  font-size: 12px;
+  color: var(--ink-muted);
+}
+
+.sable-piece-price {
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+.sable-sizes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding-left: 34px;
+}
+
+.sable-sizes button {
+  min-width: 34px;
+  height: 30px;
+  padding: 0 9px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--ink-border);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: background-color 0.25s, color 0.25s, border-color 0.25s;
+}
+
+@media (hover: hover) {
+  .sable-sizes button:hover {
+    border-color: var(--ink);
+  }
+}
+
+.sable-sizes button[aria-checked="true"] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+
+.sable-panel-foot {
+  margin-top: auto;
+  padding-top: 18px;
+  border-top: 1px solid var(--ink-hairline);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+}
+
+.sable-panel-foot p span {
+  display: block;
+  font-size: 10.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-subtle);
+}
+
+.sable-panel-foot p b {
+  font-family: var(--font-serif);
+  font-size: 30px;
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+}
+
+.sable-delivery-note {
+  margin-top: 12px;
+  font-size: 11.5px;
+  color: var(--ink-subtle);
+}
+
+/* Bag Drawer Items & Empty State */
+.sable-bag-empty {
+  margin: auto 0;
+  padding: 40px 0;
+  text-align: center;
+  color: var(--ink-muted);
+}
+
+.sable-bag-empty p {
+  font-family: var(--font-serif);
+  font-size: 26px;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+
+.sable-bag-items {
+  margin-bottom: 20px;
+}
+
+.sable-bag-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-top: 1px solid var(--ink-hairline);
+}
+
+.sable-bag-item-meta h4 {
+  font-size: 13.5px;
+  font-weight: 500;
+}
+
+.sable-bag-item-meta p {
+  font-size: 11.5px;
+  color: var(--ink-muted);
+}
+
+.sable-bag-item-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+.sable-bag-remove {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ink-subtle);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.sable-bag-remove:hover {
+  color: var(--ink);
+}
+
+/* Toast Notification */
+.sable-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translate(-50%, 16px);
+  z-index: 400;
+  padding: 11px 20px;
+  border-radius: var(--radius-pill);
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  box-shadow: 0 12px 30px rgba(27, 24, 21, 0.22);
+}
+
+/* --------------------------------------------------------------------------
+   Responsive Breakpoints
+   -------------------------------------------------------------------------- */
+@media (max-width: 900px) {
+  .sable-nav {
+    grid-template-columns: 1fr 1fr;
+  }
+  .sable-nav nav {
+    display: none;
+  }
+  .sable-season {
+    max-width: 12rem;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 720px) {
+  .sable-brand {
+    font-size: 22px;
+  }
+  .sable-words {
+    top: calc(var(--nav) + (100svh - var(--nav) - var(--band)) * 0.4);
+  }
+  .sable-words span {
+    font-size: min(52vw, 212vw / var(--len, 5), 40svh);
+  }
+  .sable-season {
+    top: calc(var(--nav) + 4px);
+    right: 18px;
+    max-width: none;
+    font-size: 0;
+  }
+  .sable-season span {
+    margin-bottom: 0;
+    font-size: 10.5px;
+  }
+  .sable-info {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "look buy"
+      "controls controls";
+    align-content: center;
+    gap: 10px 16px;
+    padding-bottom: 10px;
+  }
+  .sable-look {
+    grid-area: look;
+    min-width: 0;
+  }
+  .sable-look ul {
+    display: none;
+  }
+  .sable-look h1 {
+    margin-bottom: 0;
+    font-size: 25px;
+  }
+  .sable-buy {
+    grid-area: buy;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+  }
+  .sable-buy p span {
+    display: none;
+  }
+  .sable-buy p b {
+    font-size: 22px;
+  }
+  .sable-cta {
+    padding: 12px 18px;
+    font-size: 10.5px;
+  }
+  .sable-controls {
+    grid-area: controls;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .sable-controls ol button {
+    width: 20px;
+  }
+  .sable-panel {
+    top: auto;
+    left: 0;
+    width: auto;
+    height: min(58svh, 470px);
+    padding: 22px 18px 20px;
+    border-left: 0;
+    border-top: 1px solid rgba(27, 24, 21, 0.1);
+    border-radius: var(--radius-sheet) var(--radius-sheet) 0 0;
+    box-shadow: var(--shadow-sheet);
+  }
+  .sable-close {
+    width: 36px;
+    height: 36px;
+    top: 14px;
+    right: 14px;
+  }
+  .sable-panel h2 {
+    font-size: 30px;
+  }
+  .sable-note {
+    margin-bottom: 14px;
+    font-size: 13px;
+  }
+  .sable-pieces li {
+    padding: 11px 0 13px;
+  }
+  .sable-panel-foot {
+    position: sticky;
+    bottom: -20px;
+    margin: 0 -18px;
+    padding: 12px 18px 14px;
+    background: var(--tint);
+  }
+  @supports (color: color-mix(in srgb, red, red)) {
+    .sable-panel-foot {
+      background: color-mix(in srgb, var(--tint) 55%, #fffdf9);
+    }
+  }
+  .sable-panel-foot p b {
+    font-size: 24px;
+  }
+  .sable-bag-drawer {
+    width: 100%;
+  }
+}

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SABLE — Autumn / Winter 2026 Lookbook</title>
+  <link
+    rel="icon"
+    type="image/svg+xml"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='16' fill='%231b1815'/><text x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' fill='%23f4efe6' font-family='Georgia,serif' font-size='18'>S</text></svg>"
+  />
+  <meta
+    name="description"
+    content="SABLE Autumn / Winter 2026 fashion lookbook. Eight editorial looks in wool, silk, and leather — cut slowly, worn for years."
+  />
+
+  <!-- OpenGraph & Twitter Card -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="SABLE — Autumn / Winter 2026 Lookbook" />
+  <meta
+    property="og:description"
+    content="Eight editorial looks in wool, silk, and leather. Explore the SABLE Autumn / Winter 2026 collection."
+  />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="SABLE — Autumn / Winter 2026 Lookbook" />
+  <meta
+    name="twitter:description"
+    content="Eight editorial looks in wool, silk, and leather. Explore the SABLE Autumn / Winter 2026 collection."
+  />
+
+  <!-- Google Fonts: Instrument Serif & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="./styles/tokens.css" />
+  <link rel="stylesheet" href="./styles/sable.css" />
+
+  <!-- Structured Data (Schema.org) -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "SABLE — Autumn / Winter 2026 Lookbook",
+      "description": "Eight looks in wool, silk and leather. Cut slowly, worn for years.",
+      "brand": {
+        "@type": "Brand",
+        "name": "SABLE"
+      }
+    }
+  </script>
+</head>
+<body>
+  <main>
+    <section
+      class="sable"
+      id="sableRoot"
+      aria-label="SABLE Autumn / Winter 2026 lookbook"
+    >
+      <!-- Top Header Navigation -->
+      <header class="sable-nav">
+        <a href="#top" class="sable-brand" aria-label="SABLE home">SABLE</a>
+
+        <nav aria-label="Main">
+          <a href="#collection">Collection</a>
+          <a href="#lookbook">Lookbook</a>
+          <a href="#atelier">Atelier</a>
+          <a href="#stores">Stores</a>
+        </nav>
+
+        <button
+          type="button"
+          class="sable-bag"
+          id="bagTrigger"
+          aria-label="Bag, 0 items"
+          aria-haspopup="dialog"
+          aria-expanded="false"
+        >
+          Bag <span id="bagCount">0</span>
+        </button>
+      </header>
+
+      <!-- Editorial Season Copy -->
+      <p class="sable-season">
+        <span>Autumn / Winter 2026</span>
+        Eight looks in wool, silk and leather. Cut slowly, worn for years.
+      </p>
+
+      <!-- Giant Serif Background Wordmarks -->
+      <div class="sable-words" id="wordsLayer" aria-hidden="true"></div>
+
+      <!-- Interactive 8-Look Cut-Out Rail -->
+      <div
+        class="sable-stage"
+        id="carouselStage"
+        tabindex="0"
+        role="region"
+        aria-roledescription="carousel"
+        aria-label="Looks — drag or use the arrow keys"
+      ></div>
+
+      <!-- Bottom Info Band & Controls -->
+      <footer class="sable-info">
+        <div class="sable-look">
+          <p class="sable-count">
+            <b id="lookNumber">Look 01</b> / 08
+          </p>
+          <h1 id="lookTitle">The long camel coat</h1>
+          <ul id="lookItemsList"></ul>
+        </div>
+
+        <div class="sable-controls">
+          <button
+            type="button"
+            class="sable-arrow"
+            id="prevBtn"
+            aria-label="Previous look"
+          >
+            &larr;
+          </button>
+
+          <ol id="dotsList" aria-label="Select look"></ol>
+
+          <button
+            type="button"
+            class="sable-arrow"
+            id="nextBtn"
+            aria-label="Next look"
+          >
+            &rarr;
+          </button>
+        </div>
+
+        <div class="sable-buy">
+          <p>
+            <span>The full look</span>
+            <b id="lookTotalPrice">&euro;1,940</b>
+          </p>
+          <button type="button" class="sable-cta" id="shopLookBtn">
+            Shop the look <i aria-hidden="true">&rarr;</i>
+          </button>
+        </div>
+      </footer>
+
+      <!-- Slide-Over Detail Drawer (Desktop) / Bottom Sheet (Mobile) -->
+      <aside
+        class="sable-panel"
+        id="detailPanel"
+        role="dialog"
+        aria-modal="false"
+        aria-hidden="true"
+        aria-labelledby="panelTitle"
+      >
+        <button
+          type="button"
+          class="sable-close"
+          id="closePanelBtn"
+          aria-label="Close details"
+        >
+          &times;
+        </button>
+
+        <div class="sable-panel-in">
+          <p class="sable-count">
+            <b id="panelLookNumber">Look 01</b> / 08 &middot; Autumn / Winter 2026
+          </p>
+          <h2 id="panelTitle">The long camel coat</h2>
+          <p class="sable-note" id="panelDescription"></p>
+
+          <ul class="sable-pieces" id="panelPiecesList"></ul>
+
+          <div class="sable-panel-foot">
+            <p>
+              <span>The full look</span>
+              <b id="panelTotalPrice">&euro;1,940</b>
+            </p>
+            <button type="button" class="sable-cta" id="addLookBtn">
+              Add the look to bag <i aria-hidden="true">&rarr;</i>
+            </button>
+          </div>
+          <p class="sable-delivery-note">
+            Free delivery and 30-day returns. Each piece can also be bought on its own.
+          </p>
+        </div>
+      </aside>
+
+      <!-- Slide-Over Bag Summary Drawer -->
+      <aside
+        class="sable-bag-drawer"
+        id="bagDrawer"
+        role="dialog"
+        aria-modal="true"
+        aria-hidden="true"
+        aria-label="Shopping bag"
+      >
+        <button
+          type="button"
+          class="sable-close"
+          id="closeBagBtn"
+          aria-label="Close bag"
+        >
+          &times;
+        </button>
+
+        <div class="sable-panel-in">
+          <p class="sable-count"><b>Your Bag</b></p>
+          <h2>Selected pieces</h2>
+
+          <div class="sable-bag-empty" id="bagEmptyState">
+            <p>Your bag is empty</p>
+            <span>Explore the eight looks to add pieces or a full silhouette.</span>
+          </div>
+
+          <ul class="sable-bag-items" id="bagItemsList"></ul>
+
+          <div class="sable-panel-foot" id="bagFooter" hidden>
+            <p>
+              <span>Subtotal</span>
+              <b id="bagSubtotal">&euro;0</b>
+            </p>
+            <button type="button" class="sable-cta" id="checkoutBtn">
+              Proceed to checkout <i aria-hidden="true">&rarr;</i>
+            </button>
+          </div>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <!-- Live Toast & Screen Reader Announcer -->
+  <div class="sable-toast" id="sableToast" role="status" aria-live="polite"></div>
+  <div class="sr-only" id="srAnnouncer" aria-live="polite"></div>
+
+  <!-- GSAP 3.12.5 -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <!-- Data & Application Logic -->
+  <script src="./js/looks-data.js"></script>
+  <script src="./js/app.js"></script>
+</body>
+</html>
