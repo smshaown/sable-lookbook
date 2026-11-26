@@ -2,6 +2,14 @@
 
 An editorial fashion lookbook & e-commerce interactive experience built with **Semantic HTML5**, **Modern CSS3**, and **GSAP 3.12+**.
 
+**Live Demo:** [https://smshaown.github.io/sable-lookbook/](https://smshaown.github.io/sable-lookbook/)
+
+## Demo Video (with Voiceover)
+
+<video src="https://github.com/smshaown/sable-lookbook/raw/main/assets/sable-demo.mp4" controls width="100%"></video>
+
+> Direct file: [assets/sable-demo.mp4](./assets/sable-demo.mp4)
+
 ## Features
 - **Infinite Circular 8-Look Rail**: Drag, trackpad swipe, keyboard arrows (`←` / `→`), or dot indicators with non-linear depth scaling.
 - **Dynamic Ambient Palette**: Per-look `--tint` background cross-fade paired with a giant `Instrument Serif` masked wordmark (`CAMEL`, `CHARCOAL`, `RUST`, `TRENCH`, `IVORY`, `INDIGO`, `LEATHER`, `NOIR`).
@@ -20,6 +28,7 @@ sable-lookbook/
 │   ├── looks-data.js
 │   └── app.js
 └── assets/
+    ├── sable-demo.mp4
     └── looks/
 ```
 
